@@ -1,7 +1,26 @@
 <h1>Игра-15</h1>
 
+<button class="btn btn-primary new-game" (click)="shuffle()">New game</button>
+
 <div class="game-grid">
-    <div class="game-cell" *ngFor="let cell of cellList">
+    <div
+        class="game-cell"
+        *ngFor="let cell of cellList; let idx = index"
+        [ngClass]="canMoveCell(idx) >= 0 ? 'movable' : ''"
+        (click)="moveCell(idx)"
+    >
         <span>{{cell}}</span>
     </div>
 </div>
+
+<ng-template #victoryTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Победа</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Повторим? 🤪
+  </div>
+</ng-template>
