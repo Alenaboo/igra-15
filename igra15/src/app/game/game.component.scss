@@ -1,0 +1,20 @@
+.game-grid {
+    margin: auto;
+    $cellSize: 8vw;
+    width: 4 * $cellSize;
+    height: 4 * $cellSize;
+    border: 1px solid grey;
+    display: flex;
+    flex-wrap: wrap;
+    .game-cell {
+        width: calc(#{$cellSize} - 2px);
+        height: calc(#{$cellSize} - 2px);
+        border: 1px solid lightblue;
+        display: flex;
+        cursor: pointer;
+        & > span {
+            font-size: $cellSize / 2;
+            margin: auto;
+        }
+    }
+}
