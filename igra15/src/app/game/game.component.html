@@ -5,11 +5,12 @@
 <div class="game-grid">
     <div
         class="game-cell"
-        *ngFor="let cell of cellList; let idx = index"
-        [ngClass]="canMoveCell(idx) >= 0 ? 'movable' : ''"
-        (click)="moveCell(idx)"
+        *ngFor="let cellValue of cellList; let cellIdx = index"
+        [ngClass]="{ movable: canMoveCell(cellIdx) >= 0, empty: cellValue === cellList.length }"
+        [style.background]="'url(https://images.unsplash.com/photo-1622217817913-6f314cc142d5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&h=800)'"
+        [style.background-position]="bgWidth(cellValue) + '% ' + bgHeight(cellValue)+ '%'"
+        (click)="moveCell(cellIdx)"
     >
-        <span>{{cell}}</span>
     </div>
 </div>
 

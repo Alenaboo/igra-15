@@ -1,36 +1,44 @@
 h1 {
     text-align: center;
+    color: aliceblue;
+    text-shadow: 3px 3px #b08f76;
 }
 .btn.new-game {
     margin: 2em auto;
     width: 16vw;
     display: block;
+    filter: hue-rotate(197deg);
 }
 .game-grid {
     margin: auto;
-    $cellSize: 8vw;
+    $cellSize: 20vw;
     $maxCellSize: 20vh;
     width: 4 * $cellSize;
     height: 4 * $cellSize;
     max-width: 4 * $maxCellSize;
     max-height: 4 * $maxCellSize;
-    border: 1px solid grey;
+    border: 1px solid #eeedee;
     display: flex;
     flex-wrap: wrap;
     .game-cell {
-        transition: background-color 0.6s ease-in-out;
-        width: calc(#{$cellSize} - 2px);
-        height: calc(#{$cellSize} - 2px);
-        max-width: calc(#{$maxCellSize} - 2px);
-        max-height: calc(#{$maxCellSize} - 2px);
-        border: 1px solid lightblue;
+        $cellMargin: 2px;
+        background-size: 400% auto !important;
+        transition: opacity 0.6s ease-in-out;
+        width: calc(25% - #{$cellMargin});
+        height: calc(25% - #{$cellMargin});
+        max-width: calc(25% - #{$cellMargin});
+        max-height: calc(25% - #{$cellMargin});
+        border: 1px solid #eeedee;
         display: flex;
         margin: auto;
         &.movable {
             cursor: pointer;
             &:hover {
-                background-color: lightblue;
+                opacity: 0.5;
             }
+        }
+        &.empty {
+            visibility: hidden;
         }
         & > span {
             font-size: calc(min(#{$cellSize} / 2, #{$maxCellSize} / 2));
