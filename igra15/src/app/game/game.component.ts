@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ThunderSelectorService } from '../services/thunder-selector.service';
 
 @Component({
   selector: 'app-game',
@@ -17,20 +18,28 @@ export class GameComponent implements OnInit {
     13, 14, 15, 16
   ];
   private readonly ROW_SIZE = Math.sqrt(this.cellList.length);
-
-
+  
+  
   constructor(
     private modalService: BsModalService,
-  ) { }
-
-  public shuffle() {
+    private thunderSelectorService: ThunderSelectorService,
+    ) { }
+    
+  public bgUrl = this.thunderSelectorService.chooseBg();
+  
+  private shuffle() {
     let cnt = Math.round(Math.random() * this.ROW_SIZE**this.ROW_SIZE) + this.ROW_SIZE**2;
     while (--cnt > 0) {
       this.moveCell(Math.round(Math.random() * (this.ROW_SIZE**2 -1)));
     }
   }
 
-  public moveCell(cellId: number) {
+  public newGame() {
+    this.shuffle();
+    this.bgUrl = this.thunderSelectorService.chooseBg();
+  }
+
+  public moveCell(cellId: number): boolean {
     const newCellId = this.canMoveCell(cellId);
     if (newCellId >= 0) {
       // swapping values
@@ -38,10 +47,15 @@ export class GameComponent implements OnInit {
       this.cellList[newCellId] = this.cellList[cellId];
       this.cellList[cellId] = tmpValue;
 
-      // Check if the game is complete
-      if (this.isMidvymove()) {
-        this.openModal();
-      }
+      return true;
+    }
+    return false;
+  }
+
+  public showIfMidvyMove() {
+    // Check if the game is complete
+    if (this.isMidvyMove()) {
+      this.openModal();
     }
   }
 
@@ -77,7 +91,7 @@ export class GameComponent implements OnInit {
   /**
    * @description Check if the game is complete / the last move was the winning one
    */
-  private isMidvymove(): boolean {
+  public isMidvyMove(): boolean {
     return this.cellList.every(( cellValue, cellIdx ) => cellValue === cellIdx + 1);
   }
 

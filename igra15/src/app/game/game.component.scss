@@ -4,9 +4,14 @@ h1 {
     text-shadow: 3px 3px #b08f76;
 }
 .btn.new-game {
-    margin: 2em auto;
+    margin: 2vh auto;
     width: 16vw;
+    min-width: fit-content;
+    max-width: 32vw;
     display: block;
+}
+
+.btn-primary {
     filter: hue-rotate(197deg);
 }
 .game-grid {

@@ -1,27 +1,29 @@
-<h1>Игра-15</h1>
+<h1>Игра в 15</h1>
 
-<button class="btn btn-primary new-game" (click)="shuffle()">New game</button>
+<button class="btn btn-primary new-game" (click)="newGame()">Новая игра</button>
 
 <div class="game-grid">
     <div
         class="game-cell"
         *ngFor="let cellValue of cellList; let cellIdx = index"
-        [ngClass]="{ movable: canMoveCell(cellIdx) >= 0, empty: cellValue === cellList.length }"
-        [style.background]="'url(https://images.unsplash.com/photo-1622217817913-6f314cc142d5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&h=800)'"
-        [style.background-position]="bgWidth(cellValue) + '% ' + bgHeight(cellValue)+ '%'"
-        (click)="moveCell(cellIdx)"
+        [ngClass]="{ movable: !isMidvyMove() && canMoveCell(cellIdx) >= 0, empty: cellValue === cellList.length && !isMidvyMove() }"
+        [style.background]="'url(' + bgUrl + ') ' + bgWidth(cellValue) + '% ' + bgHeight(cellValue)+ '%'"
+        (click)="!isMidvyMove() && moveCell(cellIdx) && showIfMidvyMove()"
     >
     </div>
 </div>
 
 <ng-template #victoryTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Победа</h4>
+    <h4 class="modal-title pull-left">🏆 Победа 🏆</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef?.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     Повторим? 🤪
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary text-capitalize" (click)="modalRef?.hide();newGame()">да</button>
   </div>
 </ng-template>
